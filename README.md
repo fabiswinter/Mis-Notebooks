@@ -1,6 +1,16 @@
-## <span style="font-size: 32px; font-weight: bold; color: #003366;">Proyecto Ausentismo en la administración pública de una provincia argentina</span>
+# Data Science Project: Análisis y Predicción de Ausentismo en la Administración Pública
 
-## <span style="font-size: 26px; font-weight: bold; color: #5ba6f1;">Equipo de trabajo Nro 15</span>
+[![Python 3.14+](https://img.shields.io/badge/python-3.14+-blue.svg)](https://www.python.org/downloads/)
+[![Pandas](https://img.shields.io/badge/pandas-1.5+-150458.svg)](https://pandas.pydata.org/)
+[![Scikit-Learn](https://img.shields.io/badge/scikit--learn-1.0+-F7931E.svg)](https://scikit-learn.org/)
+
+Este repositorio contiene un proyecto end-to-end de Ciencia de Datos orientado al **Análisis Exploratorio (EDA)** y la **Modelación Predictiva del Ausentismo Laboral** en el ámbito de la administración pública. 
+
+A través del procesamiento y la ingeniería de características (*Feature Engineering*) sobre registros masivos de licencias, el proyecto busca identificar patrones clave de ausentismo y entrenar modelos capaces de estimar el volumen, riesgo y duración de las inasistencias.
+
+---
+
+## <span style="font-size: 26px; font-weight: bold; color: #0d3c6c;">Equipo de trabajo Nro 15</span>
 <ul>
   <li style="color: #81c6d2;"><b>Fabiana Winterstetter</b></li>
   <li style="color: #81c6d2;"><b>Nicolás Germán Diaz</b></li>
@@ -8,47 +18,26 @@
    
 </ul>
 
-El estudio de las pautas de ausentismo en las organizaciones públicas constituye un campo crítico dentro del análisis organizacional y la economía del trabajo. La disponibilidad de grandes volúmenes de datos transaccionales permite ir más allá del análisis estadístico descriptivo e incursionar en la modelación predictiva del comportamiento laboral.
-
-Este trabajo final intenta abordar el ciclo completo de un proyecto de Data Science aplicado a la administración pública: 
-<p style="font-size: 16px; line-height: 1.6;">
-    <mark style="background-color: #e6f2ff; color: #003366; padding: 2px 5px; border-radius: 3px;">
-    Desde la ingesta, limpieza e ingeniería de variables sobre datos reales de ausentismo, 
-    hasta el entrenamiento y evaluación de algoritmos de clasificación.
-    </mark>
-</p>
+---
 
 ## 📋 Tabla de Contenidos
 
 - [Descripción del Dataset](#-descripción-del-dataset)
 - [Objetivos del Proyecto](#-objetivos-del-proyecto)
+- [Ingeniería de Variables (Feature Engineering)](#-ingeniería-de-variables-feature-engineering)
+- [Modelos Predictivos Propuestos](#-modelos-predictivos-propuestos)
 
 ---
-## <span style="font-size: 24px; font-weight: bold; color: #003366;">Variables Objetivo (Target Variables)</span>
-
-* __Cantidad_días__ (Regresión / Forecasting): Predicción directa de la duración de cada evento o del acumulado de días ausentes por agente en un período (ej. trimestre/año).  
-* __Reincidencia / Alta Frecuencia__ (Clasificación Binaria): Variable derivada binaria ($1$ si el agente solicita $\ge N$ licencias en el año, $0$ en caso contrario) para identificar perfiles de riesgo.
-* __Ausencia_prolongada__ (Clasificación Binaria): Define si una licencia será extensa ($1$ si supera los $3$ días, $0$ si es de $1$ a $3$ días). Útil para que la gestión de RRHH planifique reemplazos tempranos.
-* __Exceso de Cupo__ (Clasificación): Predictor de si el agente superará su límite normativo anual (cantidad_dias_permitido_año).
-
-* __Es_agente_frecuente__ (Clasificación Binaria): $1$ si el agente solicita $\ge 5$ eventos de ausencia al año, $0$ en caso contrario. Permite detectar perfiles de reincidencia. 
-
-
-
-Este repositorio contiene un proyecto end-to-end de Ciencia de Datos orientado al **Análisis Exploratorio (EDA)** y la **Modelación Predictiva del Ausentismo Laboral** en el ámbito de la administración pública. 
-
-A través del procesamiento y la ingeniería de características (*Feature Engineering*) sobre registros masivos de licencias, el proyecto busca identificar patrones clave de ausentismo y entrenar modelos capaces de estimar el volumen, riesgo y duración de las inasistencias.
-
 
 ## 📊 Descripción del Dataset
 
-El conjunto de datos (`prueba2025_c.csv`) contiene **949,038 filas registros históricos** de licencias y ausencias de agentes públicos con 15 variables originales sin valores nulos:
+El conjunto de datos (`prueba2025_b.csv`) contiene **949,038 registros históricos** de licencias y ausencias de agentes públicos con 16 variables originales sin valores nulos:
 
 | Variable | Descripción |
 | :--- | :--- |
 | `Nro legajo` | Identificador único del agente/empleado. |
 | `Escalafon` | Agrupamiento o carrera dentro de la administración pública. |
-| `Categoría` | Representa la categoría salarial a la que pertenece dentro de su escalafón. |
+| `Categoría` | Categoría o clase dentro del escalafón de la administración pública. |
 | `Cod Art ausencia` | Código del artículo de la licencia según la normativa laboral. |
 | `Descripcion articulo ausencia` | Detalle o motivo de la ausencia (ej. *Enfermedad Común*, *Razones Particulares*). |
 | `Es de Salud?` | Flag categórico (`yes` / `no`) para licencias de índole médica. |
@@ -57,7 +46,51 @@ El conjunto de datos (`prueba2025_c.csv`) contiene **949,038 filas registros his
 | `Cant Dias Permitido Mes/Año` | Límites normativos de días permitidos por periodo. |
 | `Dependencia` | Oficina o área de trabajo del agente. |
 | `Año Nacimiento` / `Genero` | Datos demográficos del agente. |
+| `Género (Sexo)` |  |
 | `Antigüedad` | Años de servicio prestados por el agente. |
-| `Remuneración Mensual` | remuneración o sueldo que percibe el agente mensualmente. |
+| `Remuneración Mensual` | Sueldo que percibe el agente mensualmente. |
 
 ---
+
+## 🎯 Objetivos del Proyecto
+
+1. **Análisis Exploratorio de Datos (EDA):** Identificar la estacionalidad, los artículos de licencia más solicitados y las métricas de ausentismo según rango etario, género, antigüedad y dependencia.
+2. **Feature Engineering Temporal y Acumulado:** Derivar variables continuas y categóricas a partir de los datos históricos de cada legajo.
+3. **Predicción de Riesgo de Alto Ausentismo (Clasificación):** Identificar agentes con alta probabilidad de superar el umbral crítico de inasistencias en el año.
+4. **Estimación de Duración de Licencias (Regresión):** Predecir la cantidad de días que abarcará una licencia médica o personal para mejorar la planificación operativa y cobertura de servicios.
+
+---
+
+## 💡 Ingeniería de Variables (Feature Engineering)
+
+El pipeline de preparación transforma el dataset original agregando las siguientes dimensiones de análisis:
+
+* **Variables Temporales y Estacionales:**
+  * `Edad_Agente`: Edad calculada al momento del evento.
+  * `Mes_Inicio` y `Trimestre`: Estacionalidad anual (picos invernales / fin de año).
+  * `Es_Fin_De_Semana_Adyacente`: Indicador de inicio en día Lunes/Viernes ("efecto puente").
+* **Variables Históricas Acumuladas por Agente:**
+  * `Dias_Desde_Ultima_Ausencia`: Intervalo de días desde la última inasistencia registrada.
+  * `Num_Licencias_Previas_Agente`: Recuento de licencias acumuladas en el histórico.
+  * `Dias_Ausencia_Acumulados_Año`: Acumulado de días ausentes consumidos a la fecha.
+  * `Tasa_Uso_Cupo_Anual`: Porcentaje del cupo normativo anual consumido.
+* **Agregaciones Organizacionales:**
+  * `Promedio_Dias_Dependencia`: Promedio de inasistencias por área de trabajo.
+  * `Promedio_Dias_Escalafon`: Promedio de días ausentes según escalafón laboral.
+
+---
+
+## 🤖 Modelos Predictivos Propuestos
+
+1. **Supervised Classification (Alto Riesgo de Ausentismo):**
+   * *Algoritmos:* XGBoost, LightGBM, Random Forest.
+   * *Métricas:* ROC-AUC, F1-Score, Precision-Recall Curve.
+2. **Regression Models (Duración del Ausentismo):**
+   * *Algoritmos:* LightGBM Regressor, CatBoost, Ridge Regression.
+   * *Métricas:* RMSE, MAE, $R^2$.
+3. **Análisis de Supervivencia / Reincidencia:**
+   * *Algoritmos:* Cox Proportional Hazards Model.
+   * *Métricas:* Concordance Index (C-index).
+
+---
+
