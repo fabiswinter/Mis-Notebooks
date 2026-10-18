@@ -1,19 +1,27 @@
 # Data Science Project: Análisis y Predicción de Ausentismo en la Administración Pública
 
-[![Python 3.14+](https://img.shields.io/badge/python-3.14+-blue.svg)](https://www.python.org/downloads/)
-[![Pandas](https://img.shields.io/badge/pandas-1.5+-150458.svg)](https://pandas.pydata.org/)
-[![Scikit-Learn](https://img.shields.io/badge/scikit--learn-1.0+-F7931E.svg)](https://scikit-learn.org/)
+[![Python 3.14+](https://img.shields.io/badge/python-3.14+-blue.svg)](https://www.python.org/downloads/) [![Pandas](https://img.shields.io/badge/pandas-1.5+-150458.svg)](https://pandas.pydata.org/) [![Scikit-Learn](https://img.shields.io/badge/scikit--learn-1.0+-F7931E.svg)](https://scikit-learn.org/)
 
 Este repositorio contiene un proyecto end-to-end de Ciencia de Datos orientado al **Análisis Exploratorio (EDA)** y la **Modelación Predictiva del Ausentismo Laboral** en el ámbito de la administración pública. 
 
-A través del procesamiento y la ingeniería de características (*Feature Engineering*) sobre registros masivos de licencias, el proyecto busca identificar patrones clave de ausentismo y entrenar modelos capaces de estimar el volumen, riesgo y duración de las inasistencias.
+A través del procesamiento y la ingeniería de características (*Feature Engineering*) sobre registros masivos de licencias, el proyecto busca identificar patrones clave de ausentismo y entrenar modelos capaces de estimar el tipo de inasistencias, volumen, riesgo, duración de las mismas, etc.
 
 
 ---
 
 ## <span style="font-size: 26px; font-weight: bold; color: #0d3c6c;">Equipo de trabajo Nro 15</span>
+<span style="font-size: 18px; font-weight: bold; color: #0d3c6c;">
+  <!-- Icono SVG escalado a 34px para acompañar el texto grande -->
+  <svg xmlns="http://w3.org" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 10px; color: #0d3c6c;">
+    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+    <circle cx="9" cy="7" r="4" />
+    <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+  </svg><b>Sobre Nosotros</b></span>
 <ul>
   <li style="color: #81c6d2;"><b>Fabiana Winterstetter</b></li>
+  Soy ingeniera en sistemas y desde hace 30 años trabajo en una empresa en la que nos dedicamos a hacer sistemas para gestion financiera y de RRHH en la Administración Pública. </br>
+  Siempre me gustaron los desafíos y mi curiosidad es interminable, a pesar de los años que han pasado de carrera siempre quiero aprender cosas nuevas. Empecé con Análisis de Datos y me anoté en este curso para dar el siguiente paso.
   <li style="color: #81c6d2;"><b>Nicolás Germán Diaz</b></li>
   <li style="color: #81c6d2;"><b>Nadir Nahuel Quiroga</b></li>
    
@@ -31,8 +39,9 @@ A través del procesamiento y la ingeniería de características (*Feature Engin
 ---
 
 ## 📊 Descripción del Dataset
-
-El conjunto de datos (`prueba2025_b.csv`) contiene **949,038 registros históricos** de licencias y ausencias de agentes públicos con 16 variables originales sin valores nulos:
+Este dataset contiene datos sobre el ausentismo (faltas), en la administración pública de una provincia Argentina. 
+Por razones de confidencialidad no se dan mayores datos sobre la provincia a la que pertenecen los datos, ya que los mismos se obtuvieron del sistema de registración de faltas y novedades.
+El conjunto de datos obtenidos se almacenaron en un archivo csv (`prueba2025_b.csv`). Contiene **949,038 registros históricos** de licencias y ausencias de agentes públicos con 16 variables originales sin valores nulos:
 
 | Variable | Descripción |
 | :--- | :--- |
@@ -57,8 +66,8 @@ El conjunto de datos (`prueba2025_b.csv`) contiene **949,038 registros históric
 
 1. **Análisis Exploratorio de Datos (EDA):** Identificar la estacionalidad, los artículos de licencia más solicitados y las métricas de ausentismo según rango etario, género, antigüedad y dependencia.
 2. **Feature Engineering Temporal y Acumulado:** Derivar variables continuas y categóricas a partir de los datos históricos de cada legajo.
-3. **Predicción de Riesgo de Alto Ausentismo (Clasificación):** Identificar agentes con alta probabilidad de superar el umbral crítico de inasistencias en el año.
-4. **Estimación de Duración de Licencias (Regresión):** Predecir la cantidad de días que abarcará una licencia médica o personal para mejorar la planificación operativa y cobertura de servicios.
+3. **Predicción de Licencias por "Razones Particulares" u Otras Causas No Médicas**
+   Predecir si una solicitud de ausencia iniciada en determinado día corresponderá a Razones Particulares / Permisos frente a Salud.
 
 ---
 
@@ -70,26 +79,15 @@ El pipeline de preparación transforma el dataset original agregando las siguien
   * `Edad_Agente`: Edad calculada al momento del evento.
   * `Mes_Inicio` y `Trimestre`: Estacionalidad anual (picos invernales / fin de año).
   * `Es_Fin_De_Semana_Adyacente`: Indicador de inicio en día Lunes/Viernes ("efecto puente").
-* **Variables Históricas Acumuladas por Agente:**
-  * `Dias_Desde_Ultima_Ausencia`: Intervalo de días desde la última inasistencia registrada.
-  * `Num_Licencias_Previas_Agente`: Recuento de licencias acumuladas en el histórico.
-  * `Dias_Ausencia_Acumulados_Año`: Acumulado de días ausentes consumidos a la fecha.
-  * `Tasa_Uso_Cupo_Anual`: Porcentaje del cupo normativo anual consumido.
-* **Agregaciones Organizacionales:**
-  * `Promedio_Dias_Dependencia`: Promedio de inasistencias por área de trabajo.
-  * `Promedio_Dias_Escalafon`: Promedio de días ausentes según escalafón laboral.
 
 ---
 
 ## 🤖 Modelos Predictivos Propuestos
 
-1. **Supervised Classification (Alto Riesgo de Ausentismo):**
-   * *Algoritmos:* XGBoost, LightGBM, Random Forest.
+1. **Clasificación Supervisada (Predecir si una falta es de salud o razon particular):**
+   * *Algoritmos:* kNN, SVM, Random Forest.
    * *Métricas:* ROC-AUC, F1-Score, Precision-Recall Curve.
-2. **Regression Models (Duración del Ausentismo):**
-   * *Algoritmos:* LightGBM Regressor, CatBoost, Ridge Regression.
-   * *Métricas:* RMSE, MAE, $R^2$.
-
+2. **Validación cruzada** y optimización de hiperparámetros
 
 ---
 
