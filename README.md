@@ -23,6 +23,9 @@ A través del procesamiento y la ingeniería de características (*Feature Engin
   Soy ingeniera en sistemas y desde hace 30 años trabajo en una empresa en la que nos dedicamos a hacer sistemas para gestion financiera y de RRHH en la Administración Pública. </br>
   Siempre me gustaron los desafíos y mi curiosidad es interminable, a pesar de los años que han pasado de carrera siempre quiero aprender cosas nuevas. Empecé con Análisis de Datos y me anoté en este curso para dar el siguiente paso.
   <li style="color: #81c6d2;"><b>Nicolás Germán Diaz</b></li>
+  Soy Técnico electrónico, actualmente me desempeño en el área de Calidad en una empresa ferroviaria. Entusiasta de la tecnología y de las nuevas herramientas. 
+  Trato de conocer más de los temas que me interesan, en los últimos años realicé cursos de programación, base de datos, automatización con n8n y ahora me encuentro realizando este curso de Data Science. Creo que es importante actualizarse, desarrollar nuevas habilidades y siempre seguir aprendiendo.
+  
   <li style="color: #81c6d2;"><b>Nadir Nahuel Quiroga</b></li>
    
 </ul>
